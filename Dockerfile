@@ -1,5 +1,5 @@
 FROM ruby:latest
-RUN apt-get update -qq && apt-get install -y nodejs
+RUN apt-get update -qq
 
 WORKDIR /sample_app
 COPY . /sample_app/
