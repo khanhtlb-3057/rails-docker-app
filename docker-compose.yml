@@ -1,14 +1,22 @@
 version: "3"
 
 services:
+  db:
+    image: mysql:8.0.13 # user offical image
+    # Change default authentication plugin
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db-data:/var/lib/mysql # save data in docker volume
+    environment: # list environments use for this container
+      - MYSQL_ROOT_PASSWORD=12345678
   app:
     build: # use image is built from Dockerfile
       context: .
       dockerfile: docker/ruby/Dockerfile
     # Run entrypoint after db service ready
-    # command: docker/entrypoint.sh
+    command: /usr/bin/entrypoint.sh db:3306 -- /usr/bin/entrypoint.sh 
     volumes:
-      - .:/app # mount data beetwen host and container
+      - .:/rails_docker # mount data beetwen host and container
       - bundle:/bundle
     ports: # left (host port), right (expose port)
       - 3000:3000
@@ -19,3 +27,5 @@ volumes:
   db-data:
   bundle:
   redis-data:
+
+
