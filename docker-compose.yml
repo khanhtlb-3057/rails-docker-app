@@ -9,6 +9,10 @@ services:
       - db-data:/var/lib/mysql # save data in docker volume
     environment: # list environments use for this container
       - MYSQL_ROOT_PASSWORD=12345678
+  redis:
+    image: redis:7.0
+    volumes:
+      - redis-data:/data
   app:
     build: # use image is built from Dockerfile
       context: .
