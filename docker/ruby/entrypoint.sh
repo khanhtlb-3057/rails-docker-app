@@ -6,7 +6,7 @@ set -e
 bundle exec rails db:create
 bundle exec rails db:migrate
 
-rm -f tmp/pids/server.pid
+rm -f /rails_docker/tmp/pids/server.pid
 
 # bundle exec rails assets:precompile
 bundle exec rails server -b 0.0.0.0
