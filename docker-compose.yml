@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: docker/ruby/Dockerfile
     # Run entrypoint after db service ready
-    command: /usr/bin/entrypoint.sh db:3306 -- /usr/bin/entrypoint.sh 
+    command: /usr/bin/wait-for-it.sh db:3306 -- /usr/bin/entrypoint.sh 
     volumes:
       - .:/rails_docker # mount data beetwen host and container
       - bundle:/bundle
@@ -27,6 +27,18 @@ services:
     env_file: .env # list environments use file
     stdin_open: true
     tty: true
+  sidekiq:
+    build:
+      context: .
+      dockerfile: docker/ruby/Dockerfile
+    command: /usr/bin/wait-for-it.sh redis:6379 -- bundle exec sidekiq
+    depends_on:
+      - app
+      - redis
+    volumes:
+      - .:/rails_docker
+      - bundle:/bundle
+    env_file: .env
 volumes:
   db-data:
   bundle:

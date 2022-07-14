@@ -11,11 +11,7 @@ module RailsDocker
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    config.cache_store = :redis_store, {
-      host: "redis",
-      port: 6379,
-      db: 0,
-    }, {expires_in: 2.hours}
+    config.active_job.queue_adapter = :sidekiq
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -23,6 +19,6 @@ module RailsDocker
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.eager_load_paths << Rails.root.join("app/**/*.rb")
   end
 end

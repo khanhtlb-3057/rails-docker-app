@@ -8,11 +8,11 @@ COPY . /rails_docker/
 
 RUN gem install bundler && bundle install
 
-COPY /docker/ruby/entrypoint.sh /docker/common/wait-for-it.sh /usr/bin/
-
 COPY ["/docker/ruby/entrypoint.sh", "/docker/common/wait-for-it.sh", "/usr/bin/"]
 
 RUN chmod +x /usr/bin/entrypoint.sh
+RUN chmod +x /usr/bin/wait-for-it.sh
+
 
 EXPOSE 3000
 
