@@ -18,10 +18,9 @@ services:
       context: .
       dockerfile: docker/ruby/Dockerfile
     # Run entrypoint after db service ready
-    command: /usr/bin/wait-for-it.sh db:3306 -- /usr/bin/entrypoint.sh 
+    command: /usr/bin/wait-for-it.sh db:3306 -- /usr/bin/entrypoint.sh
     volumes:
       - .:/rails_docker # mount data beetwen host and container
-      - bundle:/bundle
     ports: # left (host port), right (expose port)
       - 3000:3000
     env_file: .env # list environments use file
@@ -37,11 +36,9 @@ services:
       - redis
     volumes:
       - .:/rails_docker
-      - bundle:/bundle
     env_file: .env
 volumes:
   db-data:
-  bundle:
   redis-data:
 
 
