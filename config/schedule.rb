@@ -23,6 +23,8 @@ require_relative "environment"
 set :environment, Rails.env
 set :output, "log/cron_job.log"
 
+ENV.each { |k, v| env(k, v) }
+
 every 1.minutes do
   puts "Crontab is run on #{@environment}"
   rake "user:create_users"
